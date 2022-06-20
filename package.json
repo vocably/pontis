@@ -1,0 +1,42 @@
+{
+  "name": "@vocably/pontis",
+  "version": "0.0.0",
+  "description": "Painless Chrome extension authentication via AWS Amplify websites",
+  "keywords": [
+    "chrome",
+    "extension",
+    "aws",
+    "amplify",
+    "auth"
+  ],
+  "main": "dist/commonjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc && tsc --project tsconfig.commonjs.json",
+    "watch-esm": "tsc --watch",
+    "watch-commonjs": "tsc --watch --project tsconfig.commonjs.json",
+    "start": "run-p watch*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vocably/pontis.git"
+  },
+  "dependencies": {
+    "@vocably/hermes": "^1.0.0"
+  },
+  "devDependencies": {
+    "@aws-amplify/core": "^4.5.8",
+    "@semantic-release/git": "^10.0.1",
+    "@types/chrome": "^0.0.190",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.2",
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.3",
+    "typescript": "^4.7.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
