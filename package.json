@@ -23,6 +23,9 @@
     "type": "git",
     "url": "https://github.com/vocably/pontis.git"
   },
+  "peerDependencies": {
+    "@aws-amplify/core": ">=4.5.0"
+  },
   "dependencies": {
     "@vocably/hermes": "^1.0.0"
   },

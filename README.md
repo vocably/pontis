@@ -6,7 +6,7 @@
 
 ## Installation
 
-`npm install --save @vocably/pontis`
+`npm install @vocably/pontis @aws-amplify/core --save`
 
 ## How to use
 
