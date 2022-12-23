@@ -10,22 +10,47 @@ const isStorageKey = (key: string): boolean => key.startsWith(keyPrefix);
 const getKey = (storageKey: string): string =>
   storageKey.replace(keyPrefix, '');
 
-export const setItems = (storage: Storage, items: Record<string, string>) =>
-  storage.set(
-    Object.entries(items).reduce(
-      (acc, [key, value]) => ({
-        ...acc,
-        [createStorageKey(key)]: value,
-      }),
-      {}
-    )
-  );
+export const setItems = (
+  storage: Storage,
+  items: Record<string, string>
+): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      storage.set(
+        Object.entries(items).reduce(
+          (acc, [key, value]) => ({
+            ...acc,
+            [createStorageKey(key)]: value,
+          }),
+          {}
+        ),
+        resolve
+      );
+    } catch (e) {
+      reject(e);
+    }
+  });
 
-export const removeItems = (storage: Storage, keys: string[]) =>
-  storage.remove(keys.map(createStorageKey));
+export const removeItems = (storage: Storage, keys: string[]): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      storage.remove(keys.map(createStorageKey), resolve);
+    } catch (e) {
+      reject(e);
+    }
+  });
+
+const get = (storage: Storage): Promise<{ [key: string]: any }> =>
+  new Promise((resolve, reject) => {
+    try {
+      storage.get(resolve);
+    } catch (e) {
+      reject(e);
+    }
+  });
 
 export const getAll = (storage: Storage) =>
-  storage.get().then((data) =>
+  get(storage).then((data) =>
     Object.entries(data).reduce((acc, [storageKey, value]) => {
       if (!isStorageKey(storageKey)) {
         return acc;
@@ -38,9 +63,14 @@ export const getAll = (storage: Storage) =>
     }, {})
   );
 
-export const clearAll = (storage: Storage) =>
-  storage
-    .get()
-    .then((allData) =>
-      storage.remove(Object.keys(allData).filter(isStorageKey))
-    );
+export const clearAll = (storage: Storage): Promise<void> =>
+  get(storage).then(
+    (allData) =>
+      new Promise((resolve, reject) => {
+        try {
+          storage.remove(Object.keys(allData).filter(isStorageKey), resolve);
+        } catch (e) {
+          reject(e);
+        }
+      })
+  );
