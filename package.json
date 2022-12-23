@@ -1,6 +1,6 @@
 {
   "name": "@vocably/pontis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Painless Chrome extension authentication via AWS Amplify websites",
   "keywords": [
     "chrome",
